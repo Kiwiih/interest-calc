@@ -28,10 +28,10 @@ function paymentCalc(){
     const monthCost = loanAmount * (r * (1 + r)**n) / ((1 + r)**n - 1)
     const totalInterest = (monthCost * n) - loanAmount;
      
-    //Ska skriva ut den totala räntan samt totala månadskostnaden
+    //Ska skriva ut den totala räntan
     const loanPrint = document.getElementById("loan-print") as HTMLInputElement;
-    loanPrint.innerHTML = `Månadskostnad: ${monthCost.toFixed(2)} och totala räntan: ${totalInterest.toFixed(2)}`;
-
+    loanPrint.innerHTML = `Totala räntan: ${totalInterest.toFixed(2)}`;
+    //Skapar ul och li i html för att kunna printa ut resterande information angående lån
     const paymentPlanList = document.createElement('ul');
     const paymentPlanItems = document.createElement('li');
     paymentPlanItems.innerHTML = `Månad: 
