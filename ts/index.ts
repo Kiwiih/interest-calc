@@ -24,10 +24,26 @@ function paymentCalc(){
     //Variabelnamnen är tagna från formeln på uppgift för att inte förvirra mig :)
     const r : number = interest / 100 / 12 ; //årliga räntan delat med 12 för att få månadsränta
     const n : number = loanTime * 12; // lån-åren gånger 12 för att få totala antal månader
-
+  //Formel för berkäkning av månadskostnad samt totala räntan
     const monthCost = loanAmount * (r * (1 + r)**n) / ((1 + r)**n - 1)
     const totalInterest = (monthCost * n) - loanAmount;
+     
+    //Ska skriva ut den totala räntan samt totala månadskostnaden
+    const loanPrint = document.getElementById("loan-print") as HTMLInputElement;
+    loanPrint.innerHTML = `Månadskostnad: ${monthCost.toFixed(2)} och totala räntan: ${totalInterest.toFixed(2)}`;
+
+    const paymentPlanList = document.createElement('ul');
+    const paymentPlanItems = document.createElement('li');
+    paymentPlanItems.innerHTML = `Månad: 
+    Skuld: 
+    MånadsKostnad: ${monthCost}
+    Ränta:
+    Amortering:`
+    loanPrint.appendChild(paymentPlanList);
+
     //Ska skriva ut månadskostnaden, totala räntekostnaden och en amorteringsplan
     console.log('månadskostnad: '+ monthCost);
     console.log('totalränta: ' + totalInterest);
+
+
 }
