@@ -4,7 +4,7 @@
 const inputBtn = document.getElementById('inputBtn') as HTMLInputElement;
 inputBtn.addEventListener('click', paymentCalc);
 
-function paymentCalc(){
+function paymentCalc(event: Event): void{
 
    //Hämta alla värden från formuläret
    const loanAmount : number = parseFloat((<HTMLInputElement>document.getElementById('loanAmount')).value);

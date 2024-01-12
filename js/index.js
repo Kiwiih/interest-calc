@@ -3,7 +3,7 @@
 //Function med if(narrowing) if == true{här körs beräkningsgunktionen}else{fel inmatning printas ut}
 const inputBtn = document.getElementById('inputBtn');
 inputBtn.addEventListener('click', paymentCalc);
-function paymentCalc() {
+function paymentCalc(event) {
     //Hämta alla värden från formuläret
     const loanAmount = parseFloat(document.getElementById('loanAmount').value);
     const loanTime = parseFloat(document.getElementById('loanTime').value);
