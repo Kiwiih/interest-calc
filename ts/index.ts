@@ -22,28 +22,39 @@ function paymentCalc(){
     return;
   }
     //Variabelnamnen är tagna från formeln på uppgift för att inte förvirra mig :)
-    const r : number = interest / 100 / 12 ; //årliga räntan delat med 12 för att få månadsränta
-    const n : number = loanTime * 12; // lån-åren gånger 12 för att få totala antal månader
-  //Formel för berkäkning av månadskostnad samt totala räntan
+    const r : number = interest / 100 / 12;
+    const n : number = loanTime * 12;
+ 
     const monthCost = loanAmount * (r * (1 + r)**n) / ((1 + r)**n - 1)
-    const totalInterest = (monthCost * n) - loanAmount;
-     
-    //Ska skriva ut den totala räntan
-    const loanPrint = document.getElementById("loan-print") as HTMLInputElement;
-    loanPrint.innerHTML = `Totala räntan: ${totalInterest.toFixed(2)}`;
-    //Skapar ul och li i html för att kunna printa ut resterande information angående lån
-    const paymentPlanList = document.createElement('ul');
-    const paymentPlanItems = document.createElement('li');
-    paymentPlanItems.innerHTML = `Månad: 
-    Skuld: 
-    MånadsKostnad: ${monthCost}
-    Ränta:
-    Amortering:`
-    loanPrint.appendChild(paymentPlanList);
+    const totalInterest: number = (monthCost * n) - loanAmount;
+    //printar ut den totala räntan för lånet
+    const interestPrint = document.getElementById('interest-print') as HTMLInputElement;
+    interestPrint.innerHTML = `Den totala räntan: ${totalInterest.toFixed(2)}`;
 
-    //Ska skriva ut månadskostnaden, totala räntekostnaden och en amorteringsplan
-    console.log('månadskostnad: '+ monthCost);
-    console.log('totalränta: ' + totalInterest);
+    const paymentplanList = document.createElement('ul');
+    let remainingLoan = loanAmount;
+ 
+    //loop för att räkna varje månads betlaningar, drar bort lån som betalats och räknar ränta därefter
+    for (let month = 1; month <= n; month++) {
+       const interestPayment = remainingLoan * r;
+       const payment = monthCost - interestPayment;
+       remainingLoan -= payment;
 
 
-}
+      //Fyller listan med all bbetlningsinformation, ränta, kvarvarande lån osv
+       const listItem = document.createElement('li');
+       listItem.innerHTML = `
+          Månad: ${month}, 
+          Återstående skuld: ${remainingLoan.toFixed(2)}, 
+          Månadsbetalning: ${monthCost.toFixed(2)}, 
+          Amortering: ${payment.toFixed(2)}, 
+          Ränta: ${interestPayment.toFixed(2)}
+       `;
+       paymentplanList.appendChild(listItem);
+    }
+    const loanPrintDiv = document.getElementById('loan-print') as HTMLInputElement;
+
+    loanPrintDiv.appendChild(paymentplanList);
+    //console.log('månadskostnad: ' + monthCost.toFixed(2));
+    //console.log('totalränta: ' + totalInterest.toFixed(2));
+ }
